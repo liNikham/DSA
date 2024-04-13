@@ -86,7 +86,7 @@ void solve(){
       cin>>x;
       ull currsum=pre[i]+x;
     
-      if(m.find(currsum-target)!=m.end()) count++;
+      if(m.find(currsum-target)!=m.end()) count+=m[currsum-target];
       m[currsum]++;
       pre.pb(currsum);
    }
