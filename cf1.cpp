@@ -74,27 +74,48 @@ ll phin(ll n) {ll number = n; if (n % 2 == 0) {number /= 2; while (n % 2 == 0) n
 ll getRandomNumber(ll l, ll r) {return uniform_int_distribution<ll>(l, r)(rng);}
 /*--------------------------------------------------------------------------------------------------------------------------*/
 void solve(){
-    ll n;
-    cin>>n;
-    vector<ll>box(n);
-    for(ll i=0;i<n;i++) cin>>box[i];
-    vector<ll>divisors;
-    for(ll i=1;i<=n;i++){
-        if(n%i==0) divisors.pb(i);
+ ll n,q;
+ cin>>n>>q;
+ vector<ll>v(n);
+ vector<ll>power_2;
+ for(ll i=0;i<n;i++) cin>>v[i];
+ for(ll i=0;i<q;i++){
+     ll x;
+     cin>>x;
+     if(power_2.size()==0) power_2.pb(x);
+     else{
+        if(x<power_2.back()) power_2.pb(x);
+     }
+ } 
+ ll size=power_2.size();
+ vector<ll>suffix(size);
+ for(ll i=size-1;i>=0;i--){
+    if(i==size-1){
+        suffix[i]=expo(2,power_2[i]-1,MOD);
     }
-    ll maxi=INT_MIN;
-    for(auto x: divisors){
-        
-        ll mx=0,mn=LONG_LONG_MAX;
-         for(int i=0;i<n;i+=x){
-              ll sum=0;
-              for(ll j=i;j<i+x;j++) sum+=box[j];
-              mx=max(mx,sum);
-              mn=min(mn,sum);
-         }
-         maxi=max(maxi,mx-mn);
+    else suffix[i]=expo(2,power_2[i]-1,MOD)+suffix[i+1];
+ }
+ reverse(all(power_2));
+ reverse(all(suffix));
+ for(auto &x:v){
+    if(x%2==0){
+     ll log_val=0;
+     ll y=x;
+      while(y%2==0){
+        log_val++;
+        y=y/2;
+      }
+    auto it = upper_bound(all(power_2),log_val);
+    if(it!=power_2.begin()){
+        it--;
+        ll index=it-power_2.begin();
+        x+=suffix[index];
     }
-    cout<<maxi<<endl;
+
+    }
+    }
+    for(auto x:v) cout<<x<<" "; cout<<endl;
+
 }
 
 int main() {
