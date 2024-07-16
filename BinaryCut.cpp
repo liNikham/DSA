@@ -73,16 +73,28 @@ ll mod_div(ll a, ll b, ll m) {a = a % m; b = b % m; return (mod_mul(a, mminvprim
 ll phin(ll n) {ll number = n; if (n % 2 == 0) {number /= 2; while (n % 2 == 0) n /= 2;} for (ll i = 3; i <= sqrt(n); i += 2) {if (n % i == 0) {while (n % i == 0)n /= i; number = (number / i * (i - 1));}} if (n > 1)number = (number / n * (n - 1)) ; return number;} //O(sqrt(N))
 ll getRandomNumber(ll l, ll r) {return uniform_int_distribution<ll>(l, r)(rng);}
 /*--------------------------------------------------------------------------------------------------------------------------*/
+
 void solve(){
-   ll n;
-   cin>>n;
-   set<int>s;
-   for(ll i=0;i<n;i++){
-     ll x;
-     cin>>x;
-     s.insert(x);
+ string s;
+ cin>>s;
+  ll count=0;
+   ll i=0,size=s.size();
+   while(i<size){
+      if(s[i]=='1'){
+         count++;
+         while(i<size && s[i]=='1') i++;
+      }
+      else{
+
+         count++;
+         while(i<size && s[i]=='0') i++;
+      }
    }
-   cout<<s.size()<<endl;
+   auto it=s.find("01");
+   if(it!=string::npos){
+    cout<<count-1<<endl;
+   }
+   else cout<<count<<endl;
 }
 
 int main() {
@@ -92,7 +104,7 @@ int main() {
     fastio();
     auto start1 = high_resolution_clock::now();
     int t;
-    t=1;
+    cin>>t;
     while(t--){
     solve();
     }

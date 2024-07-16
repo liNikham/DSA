@@ -74,15 +74,26 @@ ll phin(ll n) {ll number = n; if (n % 2 == 0) {number /= 2; while (n % 2 == 0) n
 ll getRandomNumber(ll l, ll r) {return uniform_int_distribution<ll>(l, r)(rng);}
 /*--------------------------------------------------------------------------------------------------------------------------*/
 void solve(){
-   ll n;
-   cin>>n;
-   set<int>s;
-   for(ll i=0;i<n;i++){
-     ll x;
-     cin>>x;
-     s.insert(x);
-   }
-   cout<<s.size()<<endl;
+      ll n,m;
+      cin>>n>>m;
+      vector<vector<ll>>v(n,vector<ll>(m));
+      for(int j=0;j<n;j++){
+        vector<ll>store;
+        for(int i=0;i<m;i++){
+              ll x; cin>>x;
+              store.pb(x);
+        }
+           v[j]=store;
+      }
+      ll count=0;
+      for(int i=0;i<n-1;i++){
+        for(int j=i+1;j<n;j++){
+            for(int k=0;k<m;k++){
+                count+=abs(v[j][k]-v[i][k]);
+            }
+        }
+      }
+      cout<<count<<endl;
 }
 
 int main() {
@@ -92,7 +103,7 @@ int main() {
     fastio();
     auto start1 = high_resolution_clock::now();
     int t;
-    t=1;
+    cin>>t;
     while(t--){
     solve();
     }

@@ -1,9 +1,9 @@
 /* Shree Swami Samarth Jay Jay Swami Samarth*/
 #pragma GCC optimize("O3,unroll-loops")
 
-#include<bits/stdc++.h>
-#include<ext/pb_ds/assoc_container.hpp>
-#include<ext/pb_ds/tree_policy.hpp>
+#include <bits/stdc++.h>
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/tree_policy.hpp>
 
 using namespace std;
 using namespace chrono;
@@ -59,7 +59,7 @@ mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
 /*---------------------------------------------------------------------------------------------------------------------------*/
 ll gcd(ll a, ll b) {if (b > a) {return gcd(b, a);} if (b == 0) {return a;} return gcd(b, a % b);}
 ll expo(ll a, ll b, ll mod) {ll res = 1; while (b > 0) {if (b & 1)res = (res * a) % mod; a = (a * a) % mod; b = b >> 1;} return res;}
-void extendgcd(ll a, ll b, ll*v) {if (b == 0) {v[0] = 1; v[1] = 0; v[2] = a; return ;} extendgcd(b, a % b, v); ll x = v[1]; v[1] = v[0] - v[1] * (a / b); v[0] = x; return;} //pass an arry of size1 3
+void extendgcd(ll a, ll b, ll*v) {if (b == 0) {v[0] = 1; v[1] = 0; v[2] = a; return ;} extendgcd(b, a % b, v); ll x = v[1]; v[1] = v[0] - v[1] * (a / b); v[0] = x; return;} //pass an array of size 3
 ll mminv(ll a, ll b) {ll arr[3]; extendgcd(a, b, arr); return arr[0];} //for non prime b
 ll mminvprime(ll a, ll b) {return expo(a, b - 2, b);}
 bool revsort(ll a, ll b) {return a > b;}
@@ -74,15 +74,41 @@ ll phin(ll n) {ll number = n; if (n % 2 == 0) {number /= 2; while (n % 2 == 0) n
 ll getRandomNumber(ll l, ll r) {return uniform_int_distribution<ll>(l, r)(rng);}
 /*--------------------------------------------------------------------------------------------------------------------------*/
 void solve(){
-   ll n;
-   cin>>n;
-   set<int>s;
-   for(ll i=0;i<n;i++){
-     ll x;
-     cin>>x;
-     s.insert(x);
+  ll n,k;
+  cin>>n>>k;
+  vector<ll>v(n);
+  for(ll i=0;i<n;i++) cin>>v[i];
+  if(k==4){
+    if(n==1) cout<<4-v[0]<<endl;
+    else{
+      ll ceven=0,maxi=INT32_MIN;
+      for(auto x:v) {
+        if(x%4==0){
+           cout<<0<<endl;
+           return ;
+        }
+        maxi=max(maxi,x%k);
+        if(x%2==0) ceven++;
+      }
+      ll twoeven=max((ll)0,2-ceven); // Cast 0 to ll
+      ll focusOnone=k-maxi;
+      ll ans=min(twoeven,focusOnone);
+      cout<<ans<<endl;
+    }
+
+  }
+  else{
+   ll maxi=INT_MIN;
+   for(auto x:v) {
+     ll val=x%k;
+     if(val==0){
+        cout<<0<<endl;
+        return;
+     } 
+     else maxi=max(maxi,x%k);
    }
-   cout<<s.size()<<endl;
+   cout<<k-maxi<<endl;
+  }
 }
 
 int main() {
@@ -92,13 +118,13 @@ int main() {
     fastio();
     auto start1 = high_resolution_clock::now();
     int t;
-    t=1;
+    cin>>t;
     while(t--){
     solve();
     }
     auto stop1 = high_resolution_clock::now();
     auto duration = duration_cast<microseconds>(stop1 - start1);
 #ifdef Nikhil2508
-    cerr << "Time: " << duration . count() / 1000 << " ms" << endl;
+    cerr << "Time: " << duration.count() / 1000 << " ms" << endl;
 #endif
 }

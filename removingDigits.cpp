@@ -73,16 +73,26 @@ ll mod_div(ll a, ll b, ll m) {a = a % m; b = b % m; return (mod_mul(a, mminvprim
 ll phin(ll n) {ll number = n; if (n % 2 == 0) {number /= 2; while (n % 2 == 0) n /= 2;} for (ll i = 3; i <= sqrt(n); i += 2) {if (n % i == 0) {while (n % i == 0)n /= i; number = (number / i * (i - 1));}} if (n > 1)number = (number / n * (n - 1)) ; return number;} //O(sqrt(N))
 ll getRandomNumber(ll l, ll r) {return uniform_int_distribution<ll>(l, r)(rng);}
 /*--------------------------------------------------------------------------------------------------------------------------*/
+ll remove(ll n,vector<ll>&dp){
+    if (n<=0) return 0;
+    unordered_set<ll>st;
+     if(dp[n]!=1e6) return dp[n];
+    string s=to_string(n);
+    for(auto x:s){
+        st.insert(x);
+    }
+    for(auto x:st){
+        ll digit=x-'0';
+       if(digit>0) dp[n]=min(dp[n],1+remove(n-digit,dp));
+    }
+    return dp[n];
+}
 void solve(){
-   ll n;
-   cin>>n;
-   set<int>s;
-   for(ll i=0;i<n;i++){
-     ll x;
-     cin>>x;
-     s.insert(x);
-   }
-   cout<<s.size()<<endl;
+    ll n;
+    cin>>n;
+    vector<ll>dp(n+1,1e6);
+    ll ans=remove(n,dp);
+    cout<<dp[n]<<endl;
 }
 
 int main() {

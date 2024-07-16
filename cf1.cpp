@@ -74,15 +74,27 @@ ll phin(ll n) {ll number = n; if (n % 2 == 0) {number /= 2; while (n % 2 == 0) n
 ll getRandomNumber(ll l, ll r) {return uniform_int_distribution<ll>(l, r)(rng);}
 /*--------------------------------------------------------------------------------------------------------------------------*/
 void solve(){
-   ll n;
-   cin>>n;
-   set<int>s;
-   for(ll i=0;i<n;i++){
-     ll x;
-     cin>>x;
-     s.insert(x);
-   }
-   cout<<s.size()<<endl;
+    ll n;
+    cin>>n;
+    vector<ll>box(n);
+    for(ll i=0;i<n;i++) cin>>box[i];
+    vector<ll>divisors;
+    for(ll i=1;i<=n;i++){
+        if(n%i==0) divisors.pb(i);
+    }
+    ll maxi=INT_MIN;
+    for(auto x: divisors){
+        
+        ll mx=0,mn=LONG_LONG_MAX;
+         for(int i=0;i<n;i+=x){
+              ll sum=0;
+              for(ll j=i;j<i+x;j++) sum+=box[j];
+              mx=max(mx,sum);
+              mn=min(mn,sum);
+         }
+         maxi=max(maxi,mx-mn);
+    }
+    cout<<maxi<<endl;
 }
 
 int main() {
@@ -92,7 +104,7 @@ int main() {
     fastio();
     auto start1 = high_resolution_clock::now();
     int t;
-    t=1;
+    cin>>t;
     while(t--){
     solve();
     }

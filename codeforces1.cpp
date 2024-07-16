@@ -74,15 +74,32 @@ ll phin(ll n) {ll number = n; if (n % 2 == 0) {number /= 2; while (n % 2 == 0) n
 ll getRandomNumber(ll l, ll r) {return uniform_int_distribution<ll>(l, r)(rng);}
 /*--------------------------------------------------------------------------------------------------------------------------*/
 void solve(){
-   ll n;
-   cin>>n;
-   set<int>s;
-   for(ll i=0;i<n;i++){
-     ll x;
-     cin>>x;
-     s.insert(x);
+   ll x;
+   cin>>x;
+   string s;
+   cin>>s;
+   vector<int>nums;
+   vector<char>letters;
+   
+         if(s[0]>='0' && s[0]<='9') nums.pb(s[0]-'0');
+         else letters.pb(s[0]);
+   for(int i=1;i<x;i++){
+         if(s[i]>='0' && s[i]<='9' && s[i-1]>='a' && s[i-1]<='z'){
+             cout<<"NO"<<endl;
+             return;
+             
+         }
+         if(s[i]>='0' && s[i]<='9') nums.pb(s[i]-'0');
+         else letters.pb(s[i]);
    }
-   cout<<s.size()<<endl;
+   vector<char>temp{'d','b','c'};
+   if(is_sorted(all(temp))){
+    cout<<"temp is sorted"<<endl;
+   }
+   if(is_sorted(all(nums)) && is_sorted(all(letters))){
+    cout<<"YES"<<endl;
+   }
+   else cout<<"NO"<<endl;
 }
 
 int main() {
@@ -92,7 +109,7 @@ int main() {
     fastio();
     auto start1 = high_resolution_clock::now();
     int t;
-    t=1;
+    cin>>t;
     while(t--){
     solve();
     }

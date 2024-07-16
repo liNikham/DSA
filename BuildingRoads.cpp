@@ -73,16 +73,42 @@ ll mod_div(ll a, ll b, ll m) {a = a % m; b = b % m; return (mod_mul(a, mminvprim
 ll phin(ll n) {ll number = n; if (n % 2 == 0) {number /= 2; while (n % 2 == 0) n /= 2;} for (ll i = 3; i <= sqrt(n); i += 2) {if (n % i == 0) {while (n % i == 0)n /= i; number = (number / i * (i - 1));}} if (n > 1)number = (number / n * (n - 1)) ; return number;} //O(sqrt(N))
 ll getRandomNumber(ll l, ll r) {return uniform_int_distribution<ll>(l, r)(rng);}
 /*--------------------------------------------------------------------------------------------------------------------------*/
+void dfs(int i, vector<ll>&vis, vector<vector<ll>>&graph){
+     vis[i]=1;
+     for(auto x:graph[i]){
+         if(!vis[x]){
+            dfs(x,vis,graph);
+         }
+     }
+}
 void solve(){
-   ll n;
-   cin>>n;
-   set<int>s;
-   for(ll i=0;i<n;i++){
-     ll x;
-     cin>>x;
-     s.insert(x);
-   }
-   cout<<s.size()<<endl;
+     ll n,m;
+     cin>>n>>m;
+     vector<vector<ll>>graph(n+1);
+     for(ll i=0;i<m;i++){
+         ll a,b;
+         cin>>a>>b;
+         graph[a].pb(b);
+         graph[b].pb(a);
+     }
+     vector<ll>vis(n+1,0);
+     vector<pair<ll,ll>>ans;
+     ll prev=-1,curr=-1,count=0;
+     for(ll i=1;i<=n;i++){
+         if(vis[i]==0){
+            curr=i;
+            count++;
+            dfs(i,vis,graph);
+         if(prev!=-1){
+            ans.pb({prev,curr});
+         }
+         prev=curr;
+         }
+     }
+     cout<<count-1<<endl;
+     for(auto x:ans){
+        cout<<x.first<<" "<<x.second<<endl;
+     }
 }
 
 int main() {

@@ -76,13 +76,25 @@ ll getRandomNumber(ll l, ll r) {return uniform_int_distribution<ll>(l, r)(rng);}
 void solve(){
    ll n;
    cin>>n;
-   set<int>s;
-   for(ll i=0;i<n;i++){
-     ll x;
-     cin>>x;
-     s.insert(x);
+   string s;
+   cin>>s;
+   ll count_one=0,count_zero=0;
+   ll i=0;
+   while(i<n){
+       if(s[i]=='1'){
+        count_one++;
+        i++;
+       }
+       else{
+        count_zero++;
+        while(i<n && s[i]=='0') i++;
+       }
    }
-   cout<<s.size()<<endl;
+   
+    if(count_one>count_zero){
+        cout<<"YES"<<endl;
+    }
+    else cout<<"NO"<<endl;
 }
 
 int main() {
@@ -92,7 +104,7 @@ int main() {
     fastio();
     auto start1 = high_resolution_clock::now();
     int t;
-    t=1;
+    cin>>t;
     while(t--){
     solve();
     }

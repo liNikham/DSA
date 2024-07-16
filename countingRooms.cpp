@@ -73,16 +73,67 @@ ll mod_div(ll a, ll b, ll m) {a = a % m; b = b % m; return (mod_mul(a, mminvprim
 ll phin(ll n) {ll number = n; if (n % 2 == 0) {number /= 2; while (n % 2 == 0) n /= 2;} for (ll i = 3; i <= sqrt(n); i += 2) {if (n % i == 0) {while (n % i == 0)n /= i; number = (number / i * (i - 1));}} if (n > 1)number = (number / n * (n - 1)) ; return number;} //O(sqrt(N))
 ll getRandomNumber(ll l, ll r) {return uniform_int_distribution<ll>(l, r)(rng);}
 /*--------------------------------------------------------------------------------------------------------------------------*/
+vector<ll>y={0,1,0,-1};
+vector<ll>x={1,0,-1,0};
+void mark_vis(ll i,ll j,ll &n,ll &m,vector<vector<ll>>&graph,vector<vector<ll>>&vis){
+      vis[i][j]=1;
+      for(ll k=0;k<4;k++){
+         if(i+x[k]>=0 && i+x[k]<n && j+y[k]>=0 && j+y[k]<m && graph[i+x[k]][j+y[k]]==0 && vis[i+x[k]][j+y[k]]==0){
+            
+            mark_vis(i+x[k],j+y[k],n,m,graph,vis);
+         }
+      }
+}
 void solve(){
-   ll n;
-   cin>>n;
-   set<int>s;
+   ll n,m;
+   cin>>n>>m;
+   vector<vector<ll>>graph(n,vector<ll>(m,0));
    for(ll i=0;i<n;i++){
-     ll x;
-     cin>>x;
-     s.insert(x);
+     for(ll j=0;j<m;j++){
+     char c;
+     cin>>c;
+     if(c=='#') graph[i][j]=1;
+     }
    }
-   cout<<s.size()<<endl;
+   vector<vector<ll>>vis(n,vector<ll>(m,0));
+   ll count=0;
+   for(ll first_row=0;first_row<m;first_row++){
+       if(vis[0][first_row]==0 && graph[0][first_row]==0){
+        count++;
+       mark_vis(0,first_row,n,m,graph,vis);
+       }
+   }
+   for(ll last_row=0;last_row<m;last_row++){
+       if(vis[n-1][last_row]==0 && graph[n-1][last_row]==0){
+        count++;
+       mark_vis(n-1,last_row,n,m,graph,vis);
+       }
+   }
+   for(ll first_col=0;first_col<n;first_col++){
+       if(vis[first_col][0]==0 && graph[first_col][0]==0){
+        count++;
+       mark_vis(first_col,0,n,m,graph,vis);
+       }
+   }
+   for(ll last_col=0;last_col<n;last_col++){
+       if(vis[last_col][m-1]==0 && graph[last_col][m-1]==0){
+       count++;
+       mark_vis(last_col,m-1,n,m,graph,vis);
+       }
+   }
+   for(ll i=0;i<n;i++){
+    for(ll j=0;j<m;j++){
+         if(graph[i][j]==0 && vis[i][j]==0){
+            count++;
+            mark_vis(i,j,n,m,graph,vis);
+       
+        
+         }
+    }
+   }
+   cout<<count<<endl;
+   
+
 }
 
 int main() {
