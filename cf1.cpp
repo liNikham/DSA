@@ -73,49 +73,33 @@ ll mod_div(ll a, ll b, ll m) {a = a % m; b = b % m; return (mod_mul(a, mminvprim
 ll phin(ll n) {ll number = n; if (n % 2 == 0) {number /= 2; while (n % 2 == 0) n /= 2;} for (ll i = 3; i <= sqrt(n); i += 2) {if (n % i == 0) {while (n % i == 0)n /= i; number = (number / i * (i - 1));}} if (n > 1)number = (number / n * (n - 1)) ; return number;} //O(sqrt(N))
 ll getRandomNumber(ll l, ll r) {return uniform_int_distribution<ll>(l, r)(rng);}
 /*--------------------------------------------------------------------------------------------------------------------------*/
+bool isValid(vector<ll>&v,ll &h,ll & avail_water){
+    ll count_water=0;
+    for(auto x:v){
+        count_water+=max(0LL,h-x);
+    }
+    return count_water<=avail_water;
+}
 void solve(){
- ll n,q;
- cin>>n>>q;
+ ll n,x;
+ cin>>n>>x;
  vector<ll>v(n);
- vector<ll>power_2;
- for(ll i=0;i<n;i++) cin>>v[i];
- for(ll i=0;i<q;i++){
-     ll x;
-     cin>>x;
-     if(power_2.size()==0) power_2.pb(x);
-     else{
-        if(x<power_2.back()) power_2.pb(x);
-     }
- } 
- ll size=power_2.size();
- vector<ll>suffix(size);
- for(ll i=size-1;i>=0;i--){
-    if(i==size-1){
-        suffix[i]=expo(2,power_2[i]-1,MOD);
-    }
-    else suffix[i]=expo(2,power_2[i]-1,MOD)+suffix[i+1];
+ for(ll i=0;i<n;i++){
+    cin>>v[i];
  }
- reverse(all(power_2));
- reverse(all(suffix));
- for(auto &x:v){
-    if(x%2==0){
-     ll log_val=0;
-     ll y=x;
-      while(y%2==0){
-        log_val++;
-        y=y/2;
-      }
-    auto it = upper_bound(all(power_2),log_val);
-    if(it!=power_2.begin()){
-        it--;
-        ll index=it-power_2.begin();
-        x+=suffix[index];
+ ll st=1,end=2e9+2;
+ ll ans;
+ while(st<=end){
+    ll mid=st+(end-st)/2;
+    if(isValid(v,mid,x)){
+        ans=mid;
+        st=mid+1;
     }
-
+    else{
+        end=mid-1;
     }
-    }
-    for(auto x:v) cout<<x<<" "; cout<<endl;
-
+ }
+ cout<<ans<<endl;
 }
 
 int main() {
