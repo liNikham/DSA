@@ -73,33 +73,30 @@ ll mod_div(ll a, ll b, ll m) {a = a % m; b = b % m; return (mod_mul(a, mminvprim
 ll phin(ll n) {ll number = n; if (n % 2 == 0) {number /= 2; while (n % 2 == 0) n /= 2;} for (ll i = 3; i <= sqrt(n); i += 2) {if (n % i == 0) {while (n % i == 0)n /= i; number = (number / i * (i - 1));}} if (n > 1)number = (number / n * (n - 1)) ; return number;} //O(sqrt(N))
 ll getRandomNumber(ll l, ll r) {return uniform_int_distribution<ll>(l, r)(rng);}
 /*--------------------------------------------------------------------------------------------------------------------------*/
-bool isValid(vector<ll>&v,ll &h,ll & avail_water){
-    ll count_water=0;
-    for(auto x:v){
-        count_water+=max(0LL,h-x);
-    }
-    return count_water<=avail_water;
-}
 void solve(){
- ll n,x;
- cin>>n>>x;
- vector<ll>v(n);
- for(ll i=0;i<n;i++){
-    cin>>v[i];
- }
- ll st=1,end=2e9+2;
- ll ans;
- while(st<=end){
-    ll mid=st+(end-st)/2;
-    if(isValid(v,mid,x)){
-        ans=mid;
-        st=mid+1;
-    }
-    else{
-        end=mid-1;
-    }
- }
- cout<<ans<<endl;
+  ll n,k;
+  cin>>n>>k;
+  if(k==0){
+    cout<<0<<endl;
+    return;
+  }
+  if(k<=n){
+    cout<<1<<endl;
+    return;
+  }
+  ll cnt=1;
+  k-=n;
+  n--;
+  while(k>0){
+     k-=n;
+     cnt++;
+     if(k>0){
+      k-=n;
+      cnt++;
+     }
+     n--;
+  }
+  cout<<cnt<<endl;
 }
 
 int main() {
