@@ -74,29 +74,31 @@ ll phin(ll n) {ll number = n; if (n % 2 == 0) {number /= 2; while (n % 2 == 0) n
 ll getRandomNumber(ll l, ll r) {return uniform_int_distribution<ll>(l, r)(rng);}
 /*--------------------------------------------------------------------------------------------------------------------------*/
 void solve(){
-  ll n,k;
-  cin>>n>>k;
-  if(k==0){
-    cout<<0<<endl;
-    return;
-  }
-  if(k<=n){
-    cout<<1<<endl;
-    return;
-  }
-  ll cnt=1;
-  k-=n;
-  n--;
-  while(k>0){
-     k-=n;
-     cnt++;
-     if(k>0){
-      k-=n;
-      cnt++;
-     }
-     n--;
-  }
-  cout<<cnt<<endl;
+   ull n,c;
+   cin>>n>>c;
+   ull sum_squares=0,sum=0;
+   vector<ull>v;
+   for(ll i=0;i<n;i++){
+       ull x;
+       cin>>x;
+       v.pb(x);
+       sum+=2*x;
+       sum_squares+=x*x;
+   }
+   ull start=1,end=1e18;
+   while(start<=end){
+    ull mid=start+(end-start)/2;
+       ull val=sum*mid*2+4*n*mid*mid;
+       if(val==c-sum_squares){
+        cout<<mid<<endl;
+        return;
+       }
+       else if(val>c-sum_squares){
+          end=mid-1;
+       }
+       else start=mid+1;
+
+   }
 }
 
 int main() {
