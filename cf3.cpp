@@ -74,38 +74,58 @@ ll phin(ll n) {ll number = n; if (n % 2 == 0) {number /= 2; while (n % 2 == 0) n
 ll getRandomNumber(ll l, ll r) {return uniform_int_distribution<ll>(l, r)(rng);}
 /*--------------------------------------------------------------------------------------------------------------------------*/
 void solve(){
-  ll n;
-  cin>>n;
-  vector<ll>ans;
-  ans.pb(n);
-  ll original=n;
-  n = n&(n-1);
-  cout<<n<<endl;
-  ans.pb(n);
-  ll limit = ceil((n-1)/(2.0));
-  while(n>limit){
-    ll xor_val= original ^ n;
-    cout<<xor_val<<endl;
-    ll store=xor_val;
-       ll start=1;
-       while(store>0){
-        start++;
-        store>>=1;
-       }
-    ll i=start+1;
-    while(n&(1<<i)==0){
-        i++;
+    ll n,q;
+    cin>>n>>q;
+    string a,b;
+    cin>>a>>b;
+    vector<vector<ll>>va(n+1,vector<ll>(27.0));
+    vector<vector<ll>>vb(n+1,vector<ll>(27.0));
+    for(ll i=1;i<=n;i++){
+        for(ll j=0;j<26;j++){
+            va[i][j]=va[i-1][j];
+        }
+        va[i][a[i-1]-'a']++;
     }
-    ll mask= ~(1<<i);
-    n= n&mask;
-    n+=xor_val;
-    ans.pb(n);
-    cout<<n<<endl;
-}
-
-  reverse(all(ans));
-  for(auto x:ans) cout<<x<<" "; cout<<endl;
-
+//    for(auto x:va){
+//     for(auto y:x) cout<<y<<" "; cout<<endl;
+//    }
+    for(ll i=1;i<=n;i++){
+        for(ll j=0;j<26;j++){
+            vb[i][j]=vb[i-1][j];
+        }
+        vb[i][b[i-1]-'a']++;
+    }
+//     for(auto x:vb){
+//     for(auto y:x) cout<<y<<" "; cout<<endl;
+//    }
+    for(ll i=0;i<q;i++){
+        ll l,r;
+        cin>>l>>r;
+        vector<ll>store_a(26,0),store_b(26,0);
+        // for(ll j=0;j<26;j++){
+        //    cout<<va[r][j]<<" "; 
+        // }
+        // cout<<endl;
+        // for(ll j=0;j<26;j++){
+        //    cout<<va[l-1][j]<<" "; 
+        // }
+        // cout<<endl;
+         for(ll j=0;j<26;j++){
+           store_a[j]= va[r][j]-va[l-1][j];
+        }
+        for(ll j=0;j<26;j++){
+           store_b[j]= vb[r][j]-vb[l-1][j];
+        }
+        // for(auto x:store_a) cout<<x<<" "; cout<<endl;
+        // for(auto x:store_b) cout<<x<<" "; cout<<endl;
+        ll cnt=0;
+        for(ll i=0;i<26;i++){
+            if(store_a[i]<store_b[i]){
+                cnt+=store_b[i]-store_a[i];
+            }
+        }
+        cout<<cnt<<endl;
+    }
 }
 
 int main() {

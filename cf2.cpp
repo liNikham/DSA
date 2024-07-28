@@ -73,54 +73,27 @@ ll mod_div(ll a, ll b, ll m) {a = a % m; b = b % m; return (mod_mul(a, mminvprim
 ll phin(ll n) {ll number = n; if (n % 2 == 0) {number /= 2; while (n % 2 == 0) n /= 2;} for (ll i = 3; i <= sqrt(n); i += 2) {if (n % i == 0) {while (n % i == 0)n /= i; number = (number / i * (i - 1));}} if (n > 1)number = (number / n * (n - 1)) ; return number;} //O(sqrt(N))
 ll getRandomNumber(ll l, ll r) {return uniform_int_distribution<ll>(l, r)(rng);}
 /*--------------------------------------------------------------------------------------------------------------------------*/
-ll turn_1_To_0(vector<ll>v,int n){
-    ll found=0,cnt=0,ans=0;
-    for(ll i=n-1;i>=0;i--){
-          if(v[i]==1){
-             v[i]=0;
-             break;
-          }
-    }
-    for(ll i=0;i<n;i++){
-          if(v[i]==0){
-              ans+=cnt;
-          }
-          else cnt++;
-    }
-    return ans;
-}
-ll turn_0_To_1(vector<ll>v,int n){
-    ll ans=0,cnt=0;
-    for(ll i=0;i<n;i++){
-         if(v[i]==0) {
-            v[i]=1;
-            break;
-         }
-    }
-      for(ll i=0;i<n;i++){
-          if(v[i]==0){
-              ans+=cnt;
-          }
-          else cnt++;
-    }
-    return ans;
-
-}
 void solve(){
- ll n;
- cin>>n;
- vector<ll>v(n);
- for(ll i=0;i<n;i++) cin>>v[i];
- ll a= turn_0_To_1(v,n);
- ll b=turn_1_To_0(v,n);
- ll cnt=0,ans=0;
-     for(ll i=0;i<n;i++){
-          if(v[i]==0){
-              ans+=cnt;
-          }
-          else cnt++;
+   ll n,k;
+   cin>>n>>k;
+   vector<vector<ll>>v(n,vector<ll>(n));
+
+   for(ll i=0;i<n;i++){
+    string s;
+    cin>>s;
+    for(ll j=0;j<n;j++) {
+           if(s[j]=='0') v[i][j]=0;
+           else v[i][j]=1;
     }
- cout<<max(a,max(b,ans))<<endl;
+   }
+  
+   for(ll i=0;i<n;i+=k){
+    for(ll j=0;j<n;j+=k){
+         cout<<v[i][j];
+    }
+    cout<<endl;
+   }
+   
 }
 
 int main() {

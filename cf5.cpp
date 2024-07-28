@@ -74,29 +74,7 @@ ll phin(ll n) {ll number = n; if (n % 2 == 0) {number /= 2; while (n % 2 == 0) n
 ll getRandomNumber(ll l, ll r) {return uniform_int_distribution<ll>(l, r)(rng);}
 /*--------------------------------------------------------------------------------------------------------------------------*/
 void solve(){
-   string s;
-   cin>>s;
-   set<char>st;
-   for(auto x:s) st.insert(x);
-   ll size=s.size();
-   if(size%2==0){
-      if(st.size()==1){
-        ll ans=size/2;
-        cout<<ans+1<<endl;
-      }
-      if(st.size()==2 && size%4==0){
-        char c= *st.begin();
-        for(ll i=1;i<size/2;i++){
-           if(s[i]!=c){
-            cout<<0<<endl;
-            return;
-           }
-        }
-        cout<<1<<endl;
-      }
-   }
-   else
-   cout<<0<<endl;
+
 }
 
 int main() {

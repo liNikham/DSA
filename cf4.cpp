@@ -74,21 +74,6 @@ ll phin(ll n) {ll number = n; if (n % 2 == 0) {number /= 2; while (n % 2 == 0) n
 ll getRandomNumber(ll l, ll r) {return uniform_int_distribution<ll>(l, r)(rng);}
 /*--------------------------------------------------------------------------------------------------------------------------*/
 void solve(){
-   ll n;
-   cin>>n;
-   if(n&1){
-    for(ll i=1;i<=n/2;i++){
-
-      cout<<i<<" "<<n-i<<" ";
-    }
-    cout<<n<<endl;
-   }
-   else{
-    for(ll i=1;i<=n/2;i++){
-      cout<<i<<" "<<(n+1-i)<<" ";
-    }
-    cout<<endl;
-   }
 
 }
 
