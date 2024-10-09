@@ -74,10 +74,7 @@ ll phin(ll n) {ll number = n; if (n % 2 == 0) {number /= 2; while (n % 2 == 0) n
 ll getRandomNumber(ll l, ll r) {return uniform_int_distribution<ll>(l, r)(rng);}
 /*--------------------------------------------------------------------------------------------------------------------------*/
 void solve(){
-  ll n;
-  cin>>n;
-  if(n%3==0) cout<<"BOB"<<endl;
-  else cout<<"ALICE"<<endl;
+   
 }
 
 int main() {

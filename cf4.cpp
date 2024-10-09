@@ -74,7 +74,17 @@ ll phin(ll n) {ll number = n; if (n % 2 == 0) {number /= 2; while (n % 2 == 0) n
 ll getRandomNumber(ll l, ll r) {return uniform_int_distribution<ll>(l, r)(rng);}
 /*--------------------------------------------------------------------------------------------------------------------------*/
 void solve(){
-
+   ll n,k;
+   cin>>n>>k;
+   vector<ll>v(n);
+   ll sum=0,cnt=0;
+    for(ll i=0;i<n;i++) cin>>v[i];
+   for(ll i=0;i<n;i++){
+       sum+=v[i];
+       if(sum>k) break;
+       cnt++;
+   }
+   cout<<cnt<<endl;
 }
 
 int main() {
